@@ -26,7 +26,7 @@ for pos in KEY_MAP:
 pressed = set()
 
 while True:
-    current = trellis.pressed_keys
+    current = set(trellis.pressed_keys)
 
     just_pressed = current - pressed
     just_released = pressed - current
