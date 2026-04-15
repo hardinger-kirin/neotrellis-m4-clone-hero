@@ -1,3 +1,0 @@
-Adafruit CircuitPython 10.1.4 on 2026-03-09; Adafruit Trellis M4 Express with samd51g19
-Board ID:trellis_m4_express
-UID:7CC2593143394C5320202046251D08FF
