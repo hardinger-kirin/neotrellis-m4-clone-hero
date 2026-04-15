@@ -209,3 +209,6 @@ __marimo__/
 # Device-specific files
 CIRCUITPY/boot_out.txt
 CIRCUITPY/settings.toml
+
+# MacOS
+.DS_Store
