@@ -6,22 +6,45 @@ from adafruit_hid.keycode import Keycode
 trellis = adafruit_trellism4.TrellisM4Express()
 keyboard = Keyboard(usb_hid.devices)
 
-# Map (col, row) button positions to keycodes and LED colors.
-# The Trellis M4 grid is 8 columns x 4 rows.
-KEY_MAP = {
-    (0, 0): Keycode.W,
-    (1, 0): Keycode.A,
-    (2, 0): Keycode.S,
-    (3, 0): Keycode.D,
-}
-
-COLOR_ON = (0, 100, 0)   # green when held
-COLOR_IDLE = (20, 20, 20) # dim white when idle
+COLOR_GREEN = (0, 100, 0)
+COLOR_RED = (100, 0, 0)
+COLOR_YELLOW = (100, 100, 0)
+COLOR_BLUE = (0, 0, 100)
+COLOR_ORANGE = (100, 50, 0)
+COLOR_PRESSED_GREEN = (0, 25, 0)
+COLOR_PRESSED_RED = (25, 0, 0)
+COLOR_PRESSED_YELLOW = (25, 25, 0)
+COLOR_PRESSED_BLUE = (0, 0, 25)
+COLOR_PRESSED_ORANGE = (25, 12, 0)
+COLOR_IDLE = (20, 20, 20)
 COLOR_OFF = (0, 0, 0)
 
-# Light up mapped buttons so you know which ones do something
-for pos in KEY_MAP:
-    trellis.pixels[pos] = COLOR_IDLE
+KEY_MAP = {
+    (0, 0): Keycode.A,
+    (1, 0): Keycode.S,
+    (2, 0): Keycode.J,
+    (3, 0): Keycode.K,
+    (4, 0): Keycode.L,
+}
+
+IDLE_COLOR_MAP = {
+    (0, 0): COLOR_GREEN,
+    (1, 0): COLOR_RED,
+    (2, 0): COLOR_YELLOW,
+    (3, 0): COLOR_BLUE,
+    (4, 0): COLOR_ORANGE,
+}
+
+PRESSED_COLOR_MAP = {
+    (0, 0): COLOR_PRESSED_GREEN,
+    (1, 0): COLOR_PRESSED_RED,
+    (2, 0): COLOR_PRESSED_YELLOW,
+    (3, 0): COLOR_PRESSED_BLUE,
+    (4, 0): COLOR_PRESSED_ORANGE,
+}
+
+for pos in IDLE_COLOR_MAP:
+    trellis.pixels[pos] = IDLE_COLOR_MAP[pos]
 
 pressed = set()
 
@@ -34,11 +57,11 @@ while True:
     for pos in just_pressed:
         if pos in KEY_MAP:
             keyboard.press(KEY_MAP[pos])
-            trellis.pixels[pos] = COLOR_ON
+            trellis.pixels[pos] = PRESSED_COLOR_MAP[pos]
 
     for pos in just_released:
         if pos in KEY_MAP:
             keyboard.release(KEY_MAP[pos])
-            trellis.pixels[pos] = COLOR_IDLE
+            trellis.pixels[pos] = IDLE_COLOR_MAP[pos]
 
     pressed = current
